@@ -5,8 +5,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatTest {
@@ -25,9 +28,10 @@ public class CatTest {
     // Проверка метода
     @Test
     public void getFood() throws Exception {
-        Cat cat = new Cat(feline);
+        Cat cat = Mockito.spy(new Cat(feline));
         cat.getFood();
-        Mockito.verify(feline).eatMeat();
+        Mockito.when(feline.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        assertEquals(List.of("Животные", "Птицы", "Рыба"), cat.getFood());
     }
 
 
